@@ -1,73 +1,71 @@
 ﻿using CarsRatingApp;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-
 Console.WriteLine("Witaj w programie do oceniania samochodow!!");
 Console.WriteLine("===========================================");
 var user = new UserRate("Adam", "AdamWu", "1234");
+Console.WriteLine("Podaj Marke:");
+Console.WriteLine("1.Honda civic. 2.Toyota corolla. 3.Mitsubishi lancer.");
+var model = Console.ReadLine();
+var Model = new AverageToFIle(model);
+user.AddModel(model);
+string[] properties = new string[3];
+properties[0] = "Prowadzenie: ";
+properties[1] = "Hamulce: ";
+properties[2] = "Przyspieszenie: ";
 while (true)
 {
-    Console.WriteLine("Zaczynamy? tak/nie");
-    var start = Console.ReadLine();
-    if (start == "tak")
-    {
         Console.WriteLine("Co chcesz zrobic?");
         Console.WriteLine("1.Dodaj ocene");
         Console.WriteLine("2.Wyswielt oceny");
         Console.WriteLine("3.Wyswietl statystyki");
         Console.WriteLine("4.Wyjscie");
         var option = Console.ReadLine();
-        Console.WriteLine("Podaj Marke:");
-        Console.WriteLine("1.Honda civic. 2.Toyota corolla. 3.Mitsubishi lancer.");
-        var model = Console.ReadLine();
-        user.AddModel(model);
+    if (option == "4")
+    {
+        break;
+    }
+    else
+    {
         switch (option)
         {
             case "1":
                 {
-                    while (true)
+                    for (int i = 0; i <= 2; i++)
                     {
                         Console.WriteLine("Podaj ocene od 1 do 5 : ");
+                        Console.Write(properties[i]);
                         var input = Console.ReadLine();
-                        if (input == "q")
+                        try
                         {
-                            break;
+                            user.AddGrade(input);
                         }
-                        else
+                        catch (Exception e)
                         {
-                            try
-                            {
-                                user.AddGrade(input);
-                            }
-                            catch (Exception e)
-                            {
-                                Console.WriteLine(e.Message);
-                            }
+                            Console.WriteLine(e.Message);
                         }
-
                     }
+                    var stat = user.GetStatistics();
+                    var Average = stat.Average;
+                    Model.AddAvgToFile(Average);
+                    Console.WriteLine(stat.Min);
+                    Console.WriteLine(stat.Max);
+                    Console.WriteLine(stat.Average);
+
+
                 }
                 break;
             case "2":
                 {
-
-                }
-                break;
-            case "3":
-                {
-
+                    var stat= user.GetStatisticsFromFile();
+                    Console.WriteLine(stat.Max);
+                    Console.WriteLine(stat.Min);
+                    Console.WriteLine(stat.Average);
                 }
                 break;
             default:
+
                 break;
         }
 
-    }
-    else
-    {
-        break;
-    }
-}
-
-
+    }  
+}    
 Console.WriteLine("Do Widzenia");

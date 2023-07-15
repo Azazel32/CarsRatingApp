@@ -1,10 +1,32 @@
 ﻿namespace CarsRatingApp
 {
-    public class UserRate : UserRateBase
+    public class UserRate:UserRateBase
     {
-        private string CarModelFile;
-        public UserRate(string name, string login, string password) : base(name, login, password)
+        private List<float> Grades = new List<float>();
+        private string Model;
+        public UserRate(string name, string login, string password):base(name, login, password)
         {
+        }
+        public void AddModel(string model)
+        {
+            switch (model)
+            {
+                case "1":
+                    {
+                        this.Model = "Honda_Civic.txt";
+                    }
+                    break;
+                case "2":
+                    {
+                        this.Model = "Toyota_Corolla.txt";
+                    }
+                    break;
+                case "3":
+                    {
+                        this.Model = "Mitsubishi_Lancer.txt";
+                    }
+                    break;
+            }
         }
 
         public override void AddGrade(double grade)
@@ -35,44 +57,42 @@
         {
             if (grade >= 0 && grade <= 5)
             {
-                using (var writer = File.AppendText(CarModelFile))
-                {
-                    writer.WriteLine(grade);
-                }
-
+                this.Grades.Add(grade);
             }
             else
             {
                 throw new Exception("invalid grade value");
             }
         }
-
-        public override void AddModel(string model)
-        {
-
-            switch (model)
-            {
-                case "1":
-                    {
-                        CarModelFile = "Honda_Civic.txt";
-                    }
-                    break;
-                case "2":
-                    {
-                        CarModelFile = "Honda_Civic.txt";
-                    }
-                    break;
-                case "3":
-                    {
-                        CarModelFile = "Honda_Civic.txt";
-                    }
-                    break;
-            }
-        }
-
         public override Statistics GetStatistics()
         {
-            throw new NotImplementedException();
+            var stat = new Statistics();
+            foreach (var grade in Grades)
+            {
+                stat.AddGradeToStat(grade);
+            }
+            return stat;
         }
+        
+        
+            public override StatisticsInFile GetStatisticsFromFile()
+            {
+
+            var statistics = new StatisticsInFile();
+
+                if (File.Exists(Model))
+                {
+                    using (var reader = File.OpenText(Model))
+                    {
+                        var line = reader.ReadLine();
+                        while ((line = reader.ReadLine()) != null)
+                        {
+                            var grade = float.Parse(line);
+                            statistics.AddGradeToStat(grade);
+                        }
+                    }
+                }
+                return statistics;
+            }
     }
 }
