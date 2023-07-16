@@ -1,10 +1,10 @@
 ﻿namespace CarsRatingApp
 {
-    public class UserRate:UserRateBase
+    public class UserRate : UserRateBase
     {
         private List<float> Grades = new List<float>();
-        private string Model;
-        public UserRate(string name, string login, string password):base(name, login, password)
+        public string Model;
+        public UserRate(string name, string login, string password) : base(name, login, password)
         {
         }
         public void AddModel(string model)
@@ -58,6 +58,7 @@
             if (grade >= 0 && grade <= 5)
             {
                 this.Grades.Add(grade);
+                base.OnGradeAdded();
             }
             else
             {
@@ -73,26 +74,31 @@
             }
             return stat;
         }
-        
-        
-            public override StatisticsInFile GetStatisticsFromFile()
-            {
+
+
+        public override StatisticsInFile GetStatisticsFromFile()
+        {
+            base.OnShowStat();
 
             var statistics = new StatisticsInFile();
 
-                if (File.Exists(Model))
+            if (File.Exists(Model))
+            {
+                using (var reader = File.OpenText(Model))
                 {
-                    using (var reader = File.OpenText(Model))
+                    var line = reader.ReadLine();
+                    while ((line = reader.ReadLine()) != null)
                     {
-                        var line = reader.ReadLine();
-                        while ((line = reader.ReadLine()) != null)
-                        {
-                            var grade = float.Parse(line);
-                            statistics.AddGradeToStat(grade);
-                        }
+                        var grade = float.Parse(line);
+                        statistics.AddGradeToStat(grade);
+                        var model = Model;
+
                     }
                 }
-                return statistics;
             }
+            return statistics;
+
+
+        }
     }
 }

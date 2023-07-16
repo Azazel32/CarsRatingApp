@@ -3,8 +3,8 @@ namespace CarsRatingApp
 {
     public class Statistics
     {
-        public  float Max { get; private set; }
-        public  float Min { get; private set; }
+        public float Max { get; private set; }
+        public float Min { get; private set; }
         public float Average
         {
             get
@@ -12,8 +12,8 @@ namespace CarsRatingApp
                 return Sum / Counter;
             }
         }
-        public  int Counter { get; private set; }
-        public  float Sum { get; private set; }
+        public int Counter { get; private set; }
+        public float Sum { get; private set; }
         public Statistics()
         {
             this.Counter = 0;
@@ -22,29 +22,29 @@ namespace CarsRatingApp
             this.Min = float.MaxValue;
 
         }
-        
+
         public char AverageLetter
         {
             get
             {
                 switch (this.Average)
                 {
-                    case var average when average >= 80:
+                    case var average when average == 5:
                         return 'A';
-                    case var average when average >= 60:
+                    case var average when average == 4:
                         return 'B';
-                    case var average when average >= 40:
+                    case var average when average == 3:
                         return 'C';
-                    case var average when average >= 20:
+                    case var average when average == 2:
                         return 'D';
                     default:
                         return 'E';
                 }
             }
         }
-        
 
-        
+
+
         public void AddGradeToStat(float grade)
         {
             this.Counter++;

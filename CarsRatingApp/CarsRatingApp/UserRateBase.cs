@@ -2,11 +2,27 @@
 {
     public abstract class UserRateBase : IUserRateStat
     {
-        public UserRateBase(string name,string login, string password) 
+        public UserRateBase(string name, string login, string password)
         {
             this.Name = name;
             this.Login = login;
             this.Password = password;
+        }
+        public delegate void GradeAddedDelegate(object sender, EventArgs args);
+        public event GradeAddedDelegate GradeAdded;
+        public void OnGradeAdded()
+        {
+            if (GradeAdded != null)
+                GradeAdded(this, new EventArgs());
+        }
+        public delegate void ShowStatistics(object sender, EventArgs args);
+        public event ShowStatistics ShowStat;
+        public void OnShowStat()
+        {
+            if (ShowStat != null)
+            {
+                ShowStat(this, new EventArgs());
+            }
         }
         public string Name { get; private set; }
         public string Login { get; private set; }

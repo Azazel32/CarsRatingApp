@@ -30,7 +30,7 @@ namespace CarsRatingApp
         {
             using (var writer = File.AppendText(this.CarModel))
             {
-                writer.Write(avg);
+                writer.WriteLine(avg);
             }
         }
     }
