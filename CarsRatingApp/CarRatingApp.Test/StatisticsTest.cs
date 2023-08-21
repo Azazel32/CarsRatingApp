@@ -9,7 +9,7 @@ namespace CarRatingApp.Test
         [Test]
         public void WhenSumIsCorrect_ShouldReturnCorrect()
         {
-            var user = new UserRate("Adam","login","password");
+            var user = new UserRateInMemory("Adam","login","password");
             user.AddGrade(5);
             user.AddGrade("2");
             user.AddGrade("3,5");
@@ -22,7 +22,7 @@ namespace CarRatingApp.Test
         [Test]
         public void WhenStatAreCorrect_ShouldReturnCorrect() 
         {
-            var user = new UserRate("Adam", "login", "password");
+            var user = new UserRateInMemory("Adam", "login", "password");
             user.AddGrade(5);
             user.AddGrade("2");
             user.AddGrade("3,5");

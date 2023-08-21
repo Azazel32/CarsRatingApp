@@ -20,9 +20,7 @@ namespace CarsRatingApp
             this.Sum = 0;
             this.Max = float.MinValue;
             this.Min = float.MaxValue;
-
         }
-
         public char AverageLetter
         {
             get
@@ -42,9 +40,6 @@ namespace CarsRatingApp
                 }
             }
         }
-
-
-
         public void AddGradeToStat(float grade)
         {
             this.Counter++;
@@ -52,6 +47,5 @@ namespace CarsRatingApp
             this.Max = Math.Max(this.Max, grade);
             this.Min = Math.Min(this.Min, grade);
         }
-
     }
 }

@@ -15,15 +15,6 @@
             if (GradeAdded != null)
                 GradeAdded(this, new EventArgs());
         }
-        public delegate void ShowStatistics(object sender, EventArgs args);
-        public event ShowStatistics ShowStat;
-        public void OnShowStat()
-        {
-            if (ShowStat != null)
-            {
-                ShowStat(this, new EventArgs());
-            }
-        }
         public string Name { get; private set; }
         public string Login { get; private set; }
         public string Password { get; private set; }
@@ -31,6 +22,5 @@
         public abstract void AddGrade(string grade);
         public abstract void AddGrade(float grade);
         public abstract Statistics GetStatistics();
-        public abstract StatisticsInFile GetStatisticsFromFile();
     }
 }

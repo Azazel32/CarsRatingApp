@@ -1,12 +1,12 @@
 ﻿using CarsRatingApp;
+var UserInMemory = new UserRateInMemory("Adam", "AdamWu", "1234");
+var UserInFile = new UserRateInFile("Adam", "AdamWu", "1234");
 Console.WriteLine("Witaj w programie do oceniania samochodow!!");
 Console.WriteLine("===========================================");
-var user = new UserRate("Adam", "AdamWu", "1234");
 Console.WriteLine("Podaj Marke:");
 Console.WriteLine("1.Honda civic. 2.Toyota corolla. 3.Mitsubishi lancer.");
-var model = Console.ReadLine();
-var Model = new AverageToFIle(model);
-user.AddModel(model);
+string model = Console.ReadLine();
+UserInFile.AddModel(model);
 string input = "";
 string[] properties = new string[3];
 properties[0] = "Prowadzenie: ";
@@ -14,14 +14,10 @@ properties[1] = "Hamulce: ";
 properties[2] = "Przyspieszenie: ";
 void UserGradeAdded(object sender, EventArgs args)
 {
-    Console.WriteLine("Dodano nowa ocene:");
+    Console.WriteLine($"Dodano nowa ocene");
 }
-user.GradeAdded += UserGradeAdded;
-void UserShowStat(object sender, EventArgs args)
-{
-    Console.WriteLine($"Statystki: {input}");
-}
-user.ShowStat += UserShowStat;
+UserInMemory.GradeAdded += UserGradeAdded;
+UserInFile.GradeAdded += UserGradeAdded;
 while (true)
 {
     Console.WriteLine("Co chcesz zrobic?");
@@ -46,8 +42,8 @@ while (true)
                         input = Console.ReadLine();
                         try
                         {
-                            user.AddGrade(input);
-
+                            UserInMemory.AddGrade(input);
+                            
                         }
                         catch (Exception e)
                         {
@@ -56,31 +52,41 @@ while (true)
                     }
                     Console.WriteLine("");
                     Console.WriteLine("Statystki twoich ostanich ocen:");
-                    var stat = user.GetStatistics();
-                    var Average = Math.Round(stat.Average);
-                    Model.AddAvgToFile((float)Average);
-                    Console.WriteLine(stat.Min);
-                    Console.WriteLine(stat.Max);
-                    Console.WriteLine(stat.Average);
-
-
+                    var stat = UserInMemory.GetStatistics();
+                    Console.WriteLine($"Max: {stat.Max}");
+                    Console.WriteLine($"Min: {stat.Min}");
+                    Console.WriteLine($"Average: {stat.Average:N2}");
+                    Console.WriteLine($"Ocena {stat.AverageLetter}");
                 }
                 break;
             case "2":
                 {
+                    for (int i = 0; i <= 2; i++)
+                    {
+                        Console.WriteLine("Podaj ocene od 1 do 5 : ");
+                        Console.Write(properties[i]);
+                        input = Console.ReadLine();
+                        try
+                        {
+                            UserInFile.AddGrade(input);
+                        }
+                        catch (Exception e)
+                        {
+                            Console.WriteLine(e.Message);
+                        }
+                    }
                     Console.WriteLine("");
                     Console.WriteLine("Ogolna ocena:");
-                    var stat = user.GetStatisticsFromFile();
+                    var stat = UserInFile.GetStatistics();
                     Console.WriteLine($"Max: {stat.Max}");
                     Console.WriteLine($"Min: {stat.Min}");
-                    Console.WriteLine($"Avergae: {stat.Average}");
+                    Console.WriteLine($"Average: {stat.Average}");
+                    Console.WriteLine($"Ocena {stat.AverageLetter}");
                 }
                 break;
             default:
-
                 break;
         }
-
     }
 }
 Console.WriteLine("Do Widzenia");

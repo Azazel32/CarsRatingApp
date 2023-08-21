@@ -7,7 +7,7 @@ namespace CarRatingApp.Test
     {
         public void ExpextedAverageLetter_SchouldIsA()
         {
-            var user = new UserRate("Adam", "login", "password");
+            var user = new UserRateInMemory("Adam", "login", "password");
             user.AddGrade(5);
             user.AddGrade("5");
             user.AddGrade("5");
@@ -18,7 +18,7 @@ namespace CarRatingApp.Test
         [Test]
         public void ExpextedAverageLetter_SchouldIsB()
         {
-            var user = new UserRate("Adam", "login", "password");
+            var user = new UserRateInMemory("Adam", "login", "password");
             user.AddGrade(4);
             user.AddGrade("4");
             user.AddGrade("4");
@@ -29,7 +29,7 @@ namespace CarRatingApp.Test
         [Test]
         public void ExpextedAverageLetter_SchouldIsC()
         {
-            var user = new UserRate("Adam", "login", "password");
+            var user = new UserRateInMemory("Adam", "login", "password");
             user.AddGrade(3);
             user.AddGrade("4");
             user.AddGrade("2");
@@ -40,7 +40,7 @@ namespace CarRatingApp.Test
         [Test]
         public void ExpextedAverageLetter_SchouldIsD()
         {
-            var user = new UserRate("Adam", "login", "password");
+            var user = new UserRateInMemory("Adam", "login", "password");
             user.AddGrade(3);
             user.AddGrade("2");
             user.AddGrade("1");
@@ -51,7 +51,7 @@ namespace CarRatingApp.Test
         [Test]
         public void ExpextedAverageLetter_SchouldIsE()
         {
-            var user = new UserRate("Adam", "login", "password");
+            var user = new UserRateInMemory("Adam", "login", "password");
             user.AddGrade(1);
             user.AddGrade("1");
             user.AddGrade("1,5");
