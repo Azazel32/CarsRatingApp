@@ -16,6 +16,7 @@ void UserGradeAdded(object sender, EventArgs args)
 {
     Console.WriteLine($"Dodano nowa ocene");
 }
+
 UserInMemory.GradeAdded += UserGradeAdded;
 UserInFile.GradeAdded += UserGradeAdded;
 while (true)
@@ -43,7 +44,7 @@ while (true)
                         try
                         {
                             UserInMemory.AddGrade(input);
-                            
+
                         }
                         catch (Exception e)
                         {

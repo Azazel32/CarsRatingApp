@@ -1,75 +1,80 @@
 ﻿namespace CarsRatingApp
 {
-    public class UserRateInFile:UserRateBase
-    { 
-            private string Model;
-            public UserRateInFile(string name, string login, string password) : base(name, login, password)
+    public class UserRateInFile : UserRateBase
+    {
+        private string model;
+        public UserRateInFile(string name, string login, string password) : base(name, login, password)
+        {
+        }
+
+        public void AddModel(string model)
+        {
+            switch (model)
             {
-            }
-            public void AddModel(string model)
-            {
-                switch (model)
-                {
-                    case "1":
-                        {
-                            this.Model = "Honda_Civic.txt";
-                        }
-                        break;
-                    case "2":
-                        {
-                            this.Model = "Toyota_Corolla.txt";
-                        }
-                        break;
-                    case "3":
-                        {
-                            this.Model = "Mitsubishi_Lancer.txt";
-                        }
-                        break;
-                }
-            }
-            public override void AddGrade(double grade)
-            {
-                if (float.MaxValue >= grade && float.MinValue <= grade)
-                {
-                    AddGrade((float)grade);
-                }
-                else
-                {
-                    throw new Exception("  Przekroczenie zasięgu FLOAT!");
-                }
-            }
-            public override void AddGrade(string grade)
-            {
-                if (float.TryParse(grade, out float result))
-                {
-                    this.AddGrade(result);
-                }
-                else
-                {
-                    throw new Exception("String is not float");
-                }
-            }
-            public override void AddGrade(float grade)
-            {
-                if (grade >= 0 && grade <= 100)
-                {
-                    using (var writer = File.AppendText(Model))
+                case "1":
                     {
-                        writer.WriteLine(grade);
+                        this.model = "Honda_Civic.txt";
                     }
-                    OnGradeAdded();
-                }
-                else
-                {
-                    throw new Exception("invalid grade value");
-                }
+                    break;
+                case "2":
+                    {
+                        this.model = "Toyota_Corolla.txt";
+                    }
+                    break;
+                case "3":
+                    {
+                        this.model = "Mitsubishi_Lancer.txt";
+                    }
+                    break;
             }
-            public override Statistics GetStatistics()
+        }
+
+        public override void AddGrade(double grade)
+        {
+            if (float.MaxValue >= grade && float.MinValue <= grade)
             {
+                AddGrade((float)grade);
+            }
+            else
+            {
+                throw new Exception("  Przekroczenie zasięgu FLOAT!");
+            }
+        }
+
+        public override void AddGrade(string grade)
+        {
+            if (float.TryParse(grade, out float result))
+            {
+                this.AddGrade(result);
+            }
+            else
+            {
+                throw new Exception("String is not float");
+            }
+        }
+
+        public override void AddGrade(float grade)
+        {
+            if (grade >= 0 && grade <= 100)
+            {
+                using (var writer = File.AppendText(model))
+                {
+                    writer.WriteLine(grade);
+                }
+                OnGradeAdded();
+            }
+            else
+            {
+                throw new Exception("invalid grade value");
+            }
+        }
+
+        public override Statistics GetStatistics()
+        {
             var statistics = new Statistics();
-            if (File.Exists(Model))
+            if (File.Exists(model))
             {
-                using (var reader = File.OpenText(Model))
+                using (var reader = File.OpenText(model))
                 {
                     var line = reader.ReadLine();
                     while ((line = reader.ReadLine()) != null)
@@ -80,7 +85,8 @@
                 }
             }
             return statistics;
-            }
+        }
+
     }
 }
 

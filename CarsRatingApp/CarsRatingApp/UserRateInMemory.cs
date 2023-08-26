@@ -2,10 +2,11 @@
 {
     public class UserRateInMemory : UserRateBase
     {
-        private List<float> Grades = new List<float>();
+        private List<float> grades = new List<float>();
         public UserRateInMemory(string name, string login, string password) : base(name, login, password)
         {
         }
+
         public override void AddGrade(double grade)
         {
             if (float.MaxValue >= grade && float.MinValue <= grade)
@@ -17,6 +18,7 @@
                 throw new Exception("  Przekroczenie zasięgu FLOAT!");
             }
         }
+
         public override void AddGrade(string grade)
         {
             if (float.TryParse(grade, out float result))
@@ -28,11 +30,12 @@
                 throw new Exception("String is not float");
             }
         }
+
         public override void AddGrade(float grade)
         {
             if (grade >= 0 && grade <= 5)
             {
-                this.Grades.Add(grade);
+                this.grades.Add(grade);
                 base.OnGradeAdded();
             }
             else
@@ -40,14 +43,16 @@
                 throw new Exception("invalid grade value");
             }
         }
+
         public override Statistics GetStatistics()
         {
             var stat = new Statistics();
-            foreach (var grade in Grades)
+            foreach (var grade in grades)
             {
                 stat.AddGradeToStat(grade);
             }
             return stat;
         }
+
     }
 }
